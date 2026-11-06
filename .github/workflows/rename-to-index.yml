@@ -1,0 +1,19 @@
+name: Rename webpage to index.html
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rename file to index.html
+        run: |
+          if [ ! -f freelance-product-owner-webpage.html ]; then echo "source file not found"; exit 1; fi
+          if [ -f index.html ]; then echo "index.html already exists"; exit 1; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git mv freelance-product-owner-webpage.html index.html
+          git commit -m "Rename to index.html"
+          git push
